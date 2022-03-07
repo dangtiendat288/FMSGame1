@@ -1,18 +1,82 @@
-let img; // Declare variable 'img'.
+//declare background img variable
+let img;
 
-var canvas;
-var click1;
-var click2;
-var click3;
-var clickImg;
+// declare three clickables
+var game1Btn;
+var game2Btn;
+var game3Btn;
+
 
 function preload(){
-  img = loadImage('./background.jpg');
-  clickImg = loadImage('./background.jpg');
+  img = loadImage('./HPbackground.jpg');
 }
 
 function setup() {
-  createCanvas(800, 533);
+  createCanvas(1280, 720);
+  background(img);
+
+    //Create game1Btn  
+    game1Btn = new Clickable();
+    game1Btn.strokeWeight = 0;        //Stroke width of the clickable (float)
+    game1Btn.stroke = "#FFF";      //Border color of the clickable (hex number as a string)
+    game1Btn.textSize = 12;           //Size of the text (integer)
+    // game2Btn.textFont = "sans-serif"; //Font of the text (string)
+    game1Btn.cornerRadius = 20;
+    game1Btn.textScaled = true;
+    game1Btn.text = "Game 1";
+    game1Btn.textColor = "white";
+    game1Btn.locate(250, 130);
+    game1Btn.resize(200, 100);
+    game1Btn.onOutside = function () {
+      this.color = "#659e57";
+    }
+    game1Btn.onHover = function () {
+      this.color = "#90e57f";
+    }
+    game1Btn.onPress = function () {
+      window.location.replace('game1.html');
+    }   
+}
+
+function draw() {
+  let gameName = 'FMS';
+  textSize(70);
+  fill("#fff0ad");
+  stroke("black");
+  strokeWeight(5);
+  text(gameName, width / 2.2, height / 5);
+  
+  // fill('rgba(145, 243, 139, 50)');
+  // noStroke()
+  // rect(250, 130, 200, 100, 20);
+
+  // fill('white')
+  // noStroke()
+  // textSize(32);
+  // text('Game 1', 295, 190);
+  
+  //Game 2 button
+  fill('rgba(157, 125, 241, 50)');
+  noStroke()
+  rect(250, 270, 200, 100, 20);
+
+  fill('white')
+  noStroke()
+  textSize(32);
+  text('Game 2', 295, 330);
+
+  //Game 3 button
+  fill('rgba(255, 179, 58, 50)');
+  noStroke()
+  rect(250, 410, 200, 100, 20);
+
+  fill('white')
+  noStroke()
+  textSize(32);
+  text('Game 3', 295, 470);
+  
+  game1Btn.draw();
+}
 
     // //Create, style and resize clickables.
     // click1 = new Clickable();
@@ -39,25 +103,6 @@ function setup() {
     // click1.onRelease = function () {
     //   this.x += 50;
     // }
-  
-    click2 = new Clickable();
-    click2.cornerRadius = 20;
-    click2.textScaled = true;
-    click2.text = "Game 1";
-    click2.textColor = "white";
-    click2.locate(250, 130);
-    click2.resize(200, 100);
-    click2.onOutside = function () {
-      this.color = "rgba(145, 243, 139, 50)";
-    }
-    click2.onHover = function () {
-      this.color = "#AA33AA";
-    }
-    click2.onPress = function () {
-      alert("Hi there!");
-      console.log("Hello");
-    }
-  
     // click3 = new Clickable();
     // click3.image = clickImg;
     // click3.locate(280,250);
@@ -101,62 +146,3 @@ function setup() {
     // click5.onOutside = function () {
     //   click5.imageScale = 1;
     // }
-}
-
-function draw() {
-  image(img, 0, 0);
-  
-  let gameName = 'FMS';
-  textSize(70);
-  fill("#fff0ad");
-  stroke("black");
-  strokeWeight(5);
-  text(gameName, 280, 100);
-  
-  fill('rgba(145, 243, 139, 50)');
-  noStroke()
-  rect(250, 130, 200, 100, 20);
-
-  fill('white')
-  noStroke()
-  textSize(32);
-  text('Game 1', 295, 190);
-  
-  fill('rgba(157, 125, 241, 50)');
-  noStroke()
-
-  rect(250, 270, 200, 100, 20);
-
-  fill('white')
-  noStroke()
-
-  textSize(32);
-  text('Game 2', 295, 330);
-
-  
-  fill('rgba(255, 179, 58, 50)');
-  noStroke()
-
-  rect(250, 410, 200, 100, 20);
-
-  fill('white')
-  noStroke()
-
-  textSize(32);
-  text('Game 3', 295, 470);
-  
-//   myButton = new Clickable();     //Create button
-//   myButton.locate(100, 100);//Position Button
-//   myButton.color = "black"
-//   myButton.onPress = function(){  //When myButton is pressed
-//     this.color = "#AAAAFF";       //Change button color
-//     alert("Yay!");                //Show an alert message
-//   }
-
-//   click1.draw();
-  click2.draw();
-//   click3.draw();
-//   click4.draw();
-//   click5.draw();
-
-}
