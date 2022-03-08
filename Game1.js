@@ -7,7 +7,7 @@ let letter;
 
 function preload(){
   font = loadFont('arial.ttf');
-  bg = loadImage('backgroundGame1.jpeg');
+  bg = loadImage('images/backgroundGame1.jpeg');
 }
 
 function setup() {
