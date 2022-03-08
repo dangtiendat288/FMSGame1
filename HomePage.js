@@ -6,6 +6,9 @@ var game1Btn;
 var game2Btn;
 var game3Btn;
 
+//x and y of FMS
+let xFMS;
+let yFMS;
 
 function preload(){
   img = loadImage('./HPbackground.jpg');
@@ -14,6 +17,9 @@ function preload(){
 function setup() {
   createCanvas(1280, 720);
   background(img);
+
+  xFMS = width / 2.3;
+  yFMS = height / 5;
 
     //Create game1Btn  
     game1Btn = new Clickable();
@@ -28,54 +34,94 @@ function setup() {
     game1Btn.locate(250, 130);
     game1Btn.resize(200, 100);
     game1Btn.onOutside = function () {
-      this.color = "#659e57";
+      this.color = "#615855";
     }
     game1Btn.onHover = function () {
       this.color = "#90e57f";
     }
     game1Btn.onPress = function () {
       window.location.replace('game1.html');
-    }   
+    }
+
+    //Create game1Btn  
+    game1Btn = new Clickable();
+    game1Btn.strokeWeight = 0;        //Stroke width of the clickable (float)
+    game1Btn.stroke = "#FFF";      //Border color of the clickable (hex number as a string)
+    game1Btn.textSize = 12;           //Size of the text (integer)
+    // game2Btn.textFont = "sans-serif"; //Font of the text (string)
+    game1Btn.cornerRadius = 20;
+    game1Btn.textScaled = true;
+    game1Btn.text = "Game 1";
+    game1Btn.textColor = "white";
+    game1Btn.locate(xFMS, yFMS + 70);
+    game1Btn.resize(200, 100);
+    game1Btn.onOutside = function () {
+      this.color = "#615855";
+    }
+    game1Btn.onHover = function () {
+      this.color = "#c09e82";
+    }
+    game1Btn.onPress = function () {
+      window.location.replace('game1.html');
+    }
+
+    //Create game2Btn  
+    game2Btn = new Clickable();
+    game2Btn.strokeWeight = 0;        //Stroke width of the clickable (float)
+    game2Btn.stroke = "#FFF";      //Border color of the clickable (hex number as a string)
+    game2Btn.textSize = 12;           //Size of the text (integer)
+    // game2Btn.textFont = "sans-serif"; //Font of the text (string)
+    game2Btn.cornerRadius = 20;
+    game2Btn.textScaled = true;
+    game2Btn.text = "Game 2";
+    game2Btn.textColor = "white";
+    game2Btn.locate(xFMS, yFMS + 250);
+    game2Btn.resize(200, 100);
+    game2Btn.onOutside = function () {
+      this.color = "#615855";
+    }
+    game2Btn.onHover = function () {
+      this.color = "#c09e82";
+    }
+    game2Btn.onPress = function () {
+      window.location.replace('game1.html');
+    }
+
+    //Create game3Btn  
+    game3Btn = new Clickable();
+    game3Btn.strokeWeight = 0;        //Stroke width of the clickable (float)
+    game3Btn.stroke = "#FFF";      //Border color of the clickable (hex number as a string)
+    game3Btn.textSize = 12;           //Size of the text (integer)
+    // game2Btn.textFont = "sans-serif"; //Font of the text (string)
+    game3Btn.cornerRadius = 20;
+    game3Btn.textScaled = true;
+    game3Btn.text = "Game 3";
+    game3Btn.textColor = "white";
+    game3Btn.locate(xFMS, yFMS + 430);
+    game3Btn.resize(200, 100);
+    game3Btn.onOutside = function () {
+      this.color = "#615855";
+    }
+    game3Btn.onHover = function () {
+      this.color = "#c09e82";
+    }
+    game3Btn.onPress = function () {
+      window.location.replace('game1.html');
+    }
 }
 
 function draw() {
   let gameName = 'FMS';
-  textSize(70);
-  fill("#fff0ad");
-  stroke("black");
+  textSize(100);
+  textStyle(BOLD);
+  fill("#ffdf80");
+  stroke("#c09e82");
   strokeWeight(5);
-  text(gameName, width / 2.2, height / 5);
-  
-  // fill('rgba(145, 243, 139, 50)');
-  // noStroke()
-  // rect(250, 130, 200, 100, 20);
-
-  // fill('white')
-  // noStroke()
-  // textSize(32);
-  // text('Game 1', 295, 190);
-  
-  //Game 2 button
-  fill('rgba(157, 125, 241, 50)');
-  noStroke()
-  rect(250, 270, 200, 100, 20);
-
-  fill('white')
-  noStroke()
-  textSize(32);
-  text('Game 2', 295, 330);
-
-  //Game 3 button
-  fill('rgba(255, 179, 58, 50)');
-  noStroke()
-  rect(250, 410, 200, 100, 20);
-
-  fill('white')
-  noStroke()
-  textSize(32);
-  text('Game 3', 295, 470);
+  text(gameName, xFMS, yFMS);
   
   game1Btn.draw();
+  game2Btn.draw();
+  game3Btn.draw();
 }
 
     // //Create, style and resize clickables.

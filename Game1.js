@@ -26,7 +26,7 @@ function setup() {
     btnBack.stroke = "#000";      //Border color of the clickable (hex number as a string)
     btnBack.textSize = 12;           //Size of the text (integer)
     // game2Btn.textFont = "sans-serif"; //Font of the text (string)
-    btnBack.cornerRadius = 20;
+    btnBack.cornerRadius = 30;
     btnBack.textScaled = true;
     btnBack.text = "<";
     btnBack.textColor = "white";
