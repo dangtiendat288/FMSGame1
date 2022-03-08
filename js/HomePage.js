@@ -11,7 +11,7 @@ let xFMS;
 let yFMS;
 
 function preload(){
-  img = loadImage('images/HPbackground.jpg');
+  img = loadImage('./images/HPbackground.jpg');
 }
 
 function setup() {
@@ -20,28 +20,6 @@ function setup() {
 
   xFMS = width / 2.3;
   yFMS = height / 5;
-
-    //Create game1Btn  
-    game1Btn = new Clickable();
-    game1Btn.strokeWeight = 0;        //Stroke width of the clickable (float)
-    game1Btn.stroke = "#FFF";      //Border color of the clickable (hex number as a string)
-    game1Btn.textSize = 12;           //Size of the text (integer)
-    // game2Btn.textFont = "sans-serif"; //Font of the text (string)
-    game1Btn.cornerRadius = 20;
-    game1Btn.textScaled = true;
-    game1Btn.text = "Game 1";
-    game1Btn.textColor = "white";
-    game1Btn.locate(250, 130);
-    game1Btn.resize(200, 100);
-    game1Btn.onOutside = function () {
-      this.color = "#615855";
-    }
-    game1Btn.onHover = function () {
-      this.color = "#90e57f";
-    }
-    game1Btn.onPress = function () {
-      window.location.replace('game1.html');
-    }
 
     //Create game1Btn  
     game1Btn = new Clickable();
@@ -62,7 +40,7 @@ function setup() {
       this.color = "#c09e82";
     }
     game1Btn.onPress = function () {
-      window.location.replace('game1.html');
+      window.location.replace('/game1.html');
     }
 
     //Create game2Btn  
@@ -84,7 +62,7 @@ function setup() {
       this.color = "#c09e82";
     }
     game2Btn.onPress = function () {
-      window.location.replace('game2.html');
+      window.location.replace('/game2.html');
     }
 
     //Create game3Btn  
@@ -106,7 +84,7 @@ function setup() {
       this.color = "#c09e82";
     }
     game3Btn.onPress = function () {
-      window.location.replace('game3.html');
+      window.location.replace('/game3.html');
     }
 }
 

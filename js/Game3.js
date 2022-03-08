@@ -9,7 +9,7 @@ let shapeMove = false;
 let shape2Move = false;
 
 function setup() {
-  bg = loadImage('images/backgroundGame3.png');
+  bg = loadImage('../images/backgroundGame3.png');
   createCanvas(1280, 720);
 
   btnBack = new Clickable();
@@ -30,7 +30,7 @@ function setup() {
       this.color = "#c0dacc";
     }
     btnBack.onPress = function () {
-      window.location.replace('index.html');
+      window.location.replace('/index.html');
     }
 }
 

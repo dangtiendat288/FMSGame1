@@ -14,7 +14,7 @@ let shape10;
 
 function setup() {
   createCanvas(1280, 720);
-  bg = loadImage("images/backgroundGame2.png");
+  bg = loadImage("../images/backgroundGame2.png");
 //   bg = loadImage("bgGame2.png");
   //bank setup
   //small blocks
@@ -49,7 +49,7 @@ function setup() {
     this.color = "#67e2c5";
   }
   btnBack.onPress = function () {
-    window.location.replace('index.html');
+    window.location.replace('/index.html');
   }
 }
 
@@ -66,10 +66,14 @@ function draw() {
   textSize(80);
   text(title, 150, 100);
   
+  noStroke();
+  fill("#025954");
+  rect(width / 2.6, height / 2.4, 224, 220, 35);
+
   let directions = 'Copy the structure on the left!'
-  fill(300, 0, 255);
+  fill("white");
   textSize(40);
-  text(directions, 530, 335, 200, 200);
+  text(directions, width / 2.6 + 20, 335, 200, 200);
   
   let block = 'Blocks:';
   fill(0);

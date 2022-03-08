@@ -6,8 +6,8 @@ let fontSize;
 let letter;
 
 function preload(){
-  font = loadFont('arial.ttf');
-  bg = loadImage('images/backgroundGame1.jpeg');
+  font = loadFont('/arial.ttf');
+  bg = loadImage('../images/backgroundGame1.jpeg');
 }
 
 function setup() {
@@ -39,7 +39,7 @@ function setup() {
       this.color = "#b7d4ff";
     }
     btnBack.onPress = function () {
-      window.location.replace('index.html');
+      window.location.replace('/index.html');
     } 
 
 }
