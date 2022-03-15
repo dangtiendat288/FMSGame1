@@ -1,4 +1,4 @@
-// // Click and Drag an object
+// Click and Drag an object
 
 let shape1;
 let shape2;
