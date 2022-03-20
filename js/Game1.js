@@ -4,12 +4,13 @@ let font;
 let fontSize;
 let letter;
 
+let canvasWidth = 1280;
+let canvasHeight = 720;
+
 function preload(){
   // font = loadFont('/arial.ttf');
   bg = loadImage('../images/backgroundGame1.jpeg');
-}
 
-function setup() {
   opentype.load('/arial.ttf', (err, f) => {
     if (err) {
       alert('Font could not be loaded: ' + err);
@@ -19,24 +20,16 @@ function setup() {
 
       fSize = 500
       msg = 'A'
-
-      let x = width / 2 - 150
-      let y = height / 2 + 200
+      let x = canvasWidth / 2 - 150
+      let y = canvasHeight / 2 + 200
       path = font.getPath(msg, x, y, fSize)
       console.log(path.commands)
     }
   })
+}
 
-  createCanvas(1280, 720);
-
-  // fontSize = 500;
-  // textFont(font);
-  // textSize(fontSize);
-  // letter = "A";
-  // points = font.textToPoints(letter, 0, 0, fontSize, {
-  //   sampleFactor: 0.1,
-  //   simplifyThreshold: 0
-  // });
+function setup() {
+  createCanvas(canvasWidth, canvasHeight);
   
   btnBack = new Clickable();
     btnBack.strokeWeight = 0;        //Stroke width of the clickable (float)
@@ -59,13 +52,8 @@ function setup() {
       window.location.replace('/index.html');
     } 
 
-}
-
-function draw() {
   background(bg);
 
-  btnBack.draw();
-  
   let title = 'Game 1';
   fill("#f5f5eb");
   noStroke();
@@ -94,6 +82,71 @@ function draw() {
     } else if (cmd.type === 'Z') {
         endShape(CLOSE)
     }
+  }
+
+  
+}
+
+// function mousePressed() {  
+//   console.log(mouseX);
+//   fill("green");
+//   noStroke();
+//   ellipse(150, 150, 50, 50, 20);
+// }
+
+function draw() {
+  btnBack.draw();
+}
+
+function mouseDragged() {
+  if (mouseX >= 175 && mouseX <= 1105 && mouseY >= 175 && mouseY <= 150 + 470 - 25){
+  //   fill("green");
+  //   noStroke();
+  //   ellipse(mouseX, mouseY, 50);
+  // }
+    if (rayCasting([mouseX, mouseY], path.commands)){
+      fill("green");
+    }
+    else {
+      fill("red");
+    }
+    noStroke();
+    ellipse(mouseX, mouseY, 40);
+  }
+
+  console.log(rayCasting([mouseX, mouseY], path.commands))
+  // rayCasting(pos, path.commands)
+}
+
+function rayCasting(point, letter){
+  let n = letter.length;
+  let count = 0;
+  let x = point[0];
+  let y = point[1];
+
+  for (let i = 0; i < n - 1; i++){
+    let side = {
+        a: {
+          x: letter[i].x,
+          y: letter[i].y,
+        },
+        b: {
+          x: letter[i + 1].x,
+          y: letter[i + 1].y,
+        }
+    }
+
+    let x1 = side.a.x,
+      x2 = side.b.x,
+      y1 = side.a.y,
+      y2 = side.b.y;
+     
+    if(y < y1 != y < y2 &&
+      x < (x2 - x1) * (y - y1) / (y2 - y1) + x1){
+        count += 1;
+    }
+  }
+  return count % 2 != 0;
 }
 
   // drawingContext.setLineDash([5,17]);
@@ -110,4 +163,12 @@ function draw() {
   // }
   // endShape()
   // pop()
-}
+
+  // fontSize = 500;
+  // textFont(font);
+  // textSize(fontSize);
+  // letter = "A";
+  // points = font.textToPoints(letter, 0, 0, fontSize, {
+  //   sampleFactor: 0.1,
+  //   simplifyThreshold: 0
+  // }}
