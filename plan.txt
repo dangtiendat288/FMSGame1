@@ -1,0 +1,15 @@
+Game 3
+giving direction to the user
+
+Feedback: noise, color, how to know if player complete
+Game: score, timing, level
+
+sqrt((x2 - x1)^2 + (y2-y1)^2)
+
+Dot on the letters
+
+Check if dots are passed
+
+Add score if move inside path
+
+Control the score

@@ -3,6 +3,18 @@ let points;
 let font;
 let fontSize;
 let letter;
+let timer = 15
+
+let checkpoints = [
+    {x: 520,y: 545, passed: false},
+    {x: 575,y: 430, passed: false},
+    {x: 635,y: 230, passed: false},
+    {x: 665,y: 230, passed: false},
+    {x: 730,y: 430, passed: false},
+    {x: 790,y: 545, passed: false}
+  ];
+
+let score = 0;
 
 let canvasWidth = 1280;
 let canvasHeight = 720;
@@ -22,7 +34,7 @@ function preload(){
       msg = 'A'
       let x = canvasWidth / 2 - 150
       let y = canvasHeight / 2 + 200
-      path = font.getPath(msg, x, y, fSize)
+      path = font.getPath(msg, x, y, fSize)    
       console.log(path.commands)
     }
   })
@@ -54,17 +66,17 @@ function setup() {
 
   background(bg);
 
-  let title = 'Game 1';
   fill("#f5f5eb");
+  textStyle(BOLD)
   noStroke();
   textSize(80);
-  text(title, 150, 100);
+  text('Game 1', 150, 100);
 
   fill("white");
   noStroke();
   rect(150, 150, 980, 470, 20);
 
-  drawingContext.setLineDash([10,20]);
+  drawingContext.setLineDash([0]);
   // stroke(100)
   fill("white");
   stroke("black")
@@ -84,48 +96,146 @@ function setup() {
     }
   }
 
-  
+  drawingContext.setLineDash([10, 20]);
+  stroke("#AAAADE")
+  strokeWeight(10);
+  arrow(635, 230, 520, 545);
+  arrow(790, 545, 665, 230);
+  arrow(730, 430, 575, 430);
 }
 
-// function mousePressed() {  
-//   console.log(mouseX);
-//   fill("green");
-//   noStroke();
-//   ellipse(150, 150, 50, 50, 20);
-// }
+function arrow(x1, y1, x2, y2){  
+  dx = (x2 - x1);
+  dy = (y2 - y1);
+
+  norm = Math.sqrt(dx * dx + dy * dy)
+  udx = dx / norm
+  udy = dy / norm
+
+  ax = udx * Math.sqrt(3)/2 - udy * 1/2
+
+  ay = udx * 1/2 + udy * Math.sqrt(3)/2
+
+  bx = udx * Math.sqrt(3)/2 + udy * 1/2
+
+  by =  - udx * 1/2 + udy * Math.sqrt(3)/2
+
+  line(x1, y1, x2, y2);
+  line(x1, y1, x1 + 20 * ax, y1 + 20 * ay);
+  line(x1, y1, x1 + 20 * bx, y1 + 20 * by);
+}
+
 
 function draw() {
   btnBack.draw();
+
+  fill('#A8C4FE')
+  noStroke()
+  ellipse(1023, 255, 150);
+
+  fill('white')
+  textAlign(CENTER)
+  text(timer, 1024, 275)
+
+  
+  fill("#ADB1E1");
+  noStroke();
+  rect(width * 0.543, 20, 420, 110, 20);
+  
+  fill("#F5F5EB");
+  textStyle(BOLD);
+  textAlign(LEFT)
+  noStroke();
+  textSize(65);
+  text('Score: ', width * 0.57, 100);
+  
+  fill("#F5F5EB");
+  textStyle(NORMAL);
+  noStroke();
+  textAlign(CENTER)
+  textSize(65);
+  text(Math.round(score), width * 0.79, 100);
+  
+  if (frameCount % 60 == 0 && timer > 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
+    timer --;
+  }
+
+  //score calculation
+  if(timer == 0){
+    passCount = 0;
+    percent = 0;
+
+    checkpoints.forEach(item => {
+      passCount += item.passed == true ? 1 : 0    
+    })
+  
+  //end game notification
+  fill("white");
+  noStroke();
+  rect(150, 150, width - 300, height - 200, 20);
+
+  fill("#ADAFE0");
+  noStroke();
+  rect(150, 150, width - 300, height - 550, 20);
+  
+  percent = passCount / 6 * 100
+
+  if (score >= 50 && passCount >= 4){
+    header = 'Congratulation!'
+  } else if (score < 10 && passCount >= 1) {
+    header = 'Trace the paths please!'
+    percent = passCount / 16 * 100 
+  } else {
+    header = 'Try Again!'
+  }
+  
+  fill('white')
+  noStroke();
+  textSize(80);
+  textStyle(BOLD);
+  textAlign(CENTER)
+  text(header, width / 2, 270);
+
+  fill('#ADAFE0')
+  noStroke();
+  textSize(65);
+  textStyle(NORMAL);
+  text(`You got ${Math.round(percent)}%`, width / 2, 450);
+  }
 }
 
 function mouseDragged() {
   if (mouseX >= 175 && mouseX <= 1105 && mouseY >= 175 && mouseY <= 150 + 470 - 25){
-  //   fill("green");
-  //   noStroke();
-  //   ellipse(mouseX, mouseY, 50);
-  // }
     if (rayCasting([mouseX, mouseY], path.commands)){
       fill("green");
+      score += 0.07;
+      for(i = 0; i < checkpoints.length; i++){                
+        if(checkpoints[i].x - 10 <= mouseX && mouseX <= checkpoints[i].x + 10
+          && checkpoints[i].y - 10 <= mouseY && mouseY <= checkpoints[i].y + 10){
+            checkpoints[i].passed = true;
+            console.log(checkpoints[i].x, checkpoints[i].passed)
+          }
+        }
+      }
+      else {
+        fill("red");
+        score -= 0.07;
+      }
+      noStroke();
+      ellipse(mouseX, mouseY, 40);
     }
-    else {
-      fill("red");
-    }
-    noStroke();
-    ellipse(mouseX, mouseY, 40);
+    
+    // console.log(rayCasting([mouseX, mouseY], path.commands))
   }
-
-  console.log(rayCasting([mouseX, mouseY], path.commands))
-  // rayCasting(pos, path.commands)
-}
-
-function rayCasting(point, letter){
-  let n = letter.length;
-  let count = 0;
-  let x = point[0];
-  let y = point[1];
-
-  for (let i = 0; i < n - 1; i++){
-    let side = {
+  
+  function rayCasting(point, letter){
+    let n = letter.length;
+    let count = 0;
+    let x = point[0];
+    let y = point[1];
+    
+    for (let i = 0; i < n - 1; i++){
+      let side = {
         a: {
           x: letter[i].x,
           y: letter[i].y,
@@ -134,41 +244,24 @@ function rayCasting(point, letter){
           x: letter[i + 1].x,
           y: letter[i + 1].y,
         }
-    }
-
-    let x1 = side.a.x,
+      }
+      
+      let x1 = side.a.x,
       x2 = side.b.x,
       y1 = side.a.y,
       y2 = side.b.y;
-     
-    if(y < y1 != y < y2 &&
-      x < (x2 - x1) * (y - y1) / (y2 - y1) + x1){
-        count += 1;
+      
+      if(y < y1 != y < y2 &&
+        x < (x2 - x1) * (y - y1) / (y2 - y1) + x1){
+          count += 1;
+        }
+      }
+      return count % 2 != 0;
     }
-  }
-  return count % 2 != 0;
-}
 
-  // drawingContext.setLineDash([5,17]);
-  // // stroke(100)
-  // // line(0,0,100,100)
-  // // push()
-  // fill("white");
-  // stroke("black")
-  // strokeWeight(10);
-  // beginShape()
-  // for (let i = 0; i < points.length; i++) {
-  //   const p = points[i]
-  //   vertex(p.x + width / 2 - 150, p.y + height / 2 + 200)
-  // }
-  // endShape()
-  // pop()
-
-  // fontSize = 500;
-  // textFont(font);
-  // textSize(fontSize);
-  // letter = "A";
-  // points = font.textToPoints(letter, 0, 0, fontSize, {
-  //   sampleFactor: 0.1,
-  //   simplifyThreshold: 0
-  // }}
+    // function mousePressed() {  
+    //   console.log(mouseX);
+    //   fill("green");
+    //   noStroke();
+    //   ellipse(150, 150, 50, 50, 20);
+    // }
