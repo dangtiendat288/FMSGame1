@@ -1,10 +1,12 @@
 let bg;
+let resetImage;
 let points;
 let font;
 let fontSize;
 let letter;
-let timer = 15
-
+let timer
+let finish
+let score
 let checkpoints = [
     {x: 520,y: 545, passed: false},
     {x: 575,y: 430, passed: false},
@@ -14,15 +16,16 @@ let checkpoints = [
     {x: 790,y: 545, passed: false}
   ];
 
-let score = 0;
-
 let canvasWidth = 1280;
 let canvasHeight = 720;
+
+let correctBell;
+let incorrectBell;
 
 function preload(){
   // font = loadFont('/arial.ttf');
   bg = loadImage('../images/backgroundGame1.jpeg');
-
+  resetImage = loadImage('../images/reset.png');
   opentype.load('/arial.ttf', (err, f) => {
     if (err) {
       alert('Font could not be loaded: ' + err);
@@ -38,11 +41,38 @@ function preload(){
       console.log(path.commands)
     }
   })
+
+  correctBell = loadSound('sounds/correctBell.mp3')
+  incorrectBell = loadSound('sounds/incorrectBell.mp3')
 }
 
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
-  
+   resetSketch()
+}
+
+  function arrow(x1, y1, x2, y2){  
+  dx = (x2 - x1);
+  dy = (y2 - y1);
+
+  norm = Math.sqrt(dx * dx + dy * dy)
+  udx = dx / norm
+  udy = dy / norm
+
+  ax = udx * Math.sqrt(3)/2 - udy * 1/2
+
+  ay = udx * 1/2 + udy * Math.sqrt(3)/2
+
+  bx = udx * Math.sqrt(3)/2 + udy * 1/2
+
+  by =  - udx * 1/2 + udy * Math.sqrt(3)/2
+
+  line(x1, y1, x2, y2);
+  line(x1, y1, x1 + 20 * ax, y1 + 20 * ay);
+  line(x1, y1, x1 + 20 * bx, y1 + 20 * by);
+}
+
+function resetSketch(){
   btnBack = new Clickable();
     btnBack.strokeWeight = 0;        //Stroke width of the clickable (float)
     btnBack.stroke = "#000";      //Border color of the clickable (hex number as a string)
@@ -64,10 +94,55 @@ function setup() {
       window.location.replace('/index.html');
     } 
 
+    btnNext = new Clickable();
+    btnNext.strokeWeight = 0;        //Stroke width of the clickable (float)
+
+    btnNext.cornerRadius = 30;
+    btnNext.textScaled = true;
+    btnNext.text = ">";
+    btnNext.textColor = "white";
+    btnNext.locate(width / 2 + 70, height * 0.685);
+    btnNext.resize(135, 135);
+    btnNext.onOutside = function () {
+      this.color = "#acb0e0";
+    }
+    btnNext.onHover = function () {
+      this.color = "#b7d4ff";
+    }
+    btnNext.onPress = function () {
+      window.location.replace('/index.html');
+    }   
+
+    btnReset = new Clickable();
+    btnReset.strokeWeight = 0;        //Stroke width of the clickable (float)
+    // game2Btn.textFont = "sans-serif"; //Font of the text (string)
+    btnReset.cornerRadius = 30;
+    btnReset.textScaled = true;
+    btnReset.text = "";
+    btnReset.textColor = "white";
+    btnReset.locate(width / 3, height * 0.685);
+    btnReset.resize(135, 135);
+    btnReset.image = resetImage;
+    btnReset.fitImage = true;
+    btnReset.imageScale = 0.45;
+    btnReset.onOutside = function () {
+      this.color = "#acb0e0";
+    }
+    btnReset.onHover = function () {
+      this.color = "#b7d4ff";
+    }
+    btnReset.onPress = function () {
+      resetSketch();
+    }
+
+  finish = false;
+  score = 0
+  timer = 5
   background(bg);
 
   fill("#f5f5eb");
   textStyle(BOLD)
+  textAlign(LEFT)
   noStroke();
   textSize(80);
   text('Game 1', 150, 100);
@@ -104,40 +179,23 @@ function setup() {
   arrow(730, 430, 575, 430);
 }
 
-function arrow(x1, y1, x2, y2){  
-  dx = (x2 - x1);
-  dy = (y2 - y1);
-
-  norm = Math.sqrt(dx * dx + dy * dy)
-  udx = dx / norm
-  udy = dy / norm
-
-  ax = udx * Math.sqrt(3)/2 - udy * 1/2
-
-  ay = udx * 1/2 + udy * Math.sqrt(3)/2
-
-  bx = udx * Math.sqrt(3)/2 + udy * 1/2
-
-  by =  - udx * 1/2 + udy * Math.sqrt(3)/2
-
-  line(x1, y1, x2, y2);
-  line(x1, y1, x1 + 20 * ax, y1 + 20 * ay);
-  line(x1, y1, x1 + 20 * bx, y1 + 20 * by);
-}
-
-
 function draw() {
   btnBack.draw();
 
-  fill('#A8C4FE')
-  noStroke()
-  ellipse(1023, 255, 150);
+  if(!finish){
+    fill('#A8C4FE')
+    noStroke()
+    ellipse(1023, 255, 150);
 
-  fill('white')
-  textAlign(CENTER)
-  text(timer, 1024, 275)
+    fill('white')
+    textAlign(CENTER)
+    text(timer, 1024, 275)
+  } else {
+    btnNext.draw();
+    btnReset.draw();
 
-  
+  }
+
   fill("#ADB1E1");
   noStroke();
   rect(width * 0.543, 20, 420, 110, 20);
@@ -161,7 +219,8 @@ function draw() {
   }
 
   //score calculation
-  if(timer == 0){
+  if(timer == 0 && finish == false){
+    
     passCount = 0;
     percent = 0;
 
@@ -170,6 +229,21 @@ function draw() {
     })
   
   //end game notification
+  
+  percent = passCount / 6 * 100
+
+  if (score >= 20 && passCount >= 4){
+    header = 'Congratulation!'
+    correctBell.play();
+  } else if (score < 10 && passCount >= 1) {
+    header = 'Trace the paths please!'
+    percent = passCount / 16 * 100 
+    incorrectBell.play()
+  } else {
+    header = 'Try Again!'
+    incorrectBell.play()
+  }
+
   fill("white");
   noStroke();
   rect(150, 150, width - 300, height - 200, 20);
@@ -177,18 +251,7 @@ function draw() {
   fill("#ADAFE0");
   noStroke();
   rect(150, 150, width - 300, height - 550, 20);
-  
-  percent = passCount / 6 * 100
-
-  if (score >= 50 && passCount >= 4){
-    header = 'Congratulation!'
-  } else if (score < 10 && passCount >= 1) {
-    header = 'Trace the paths please!'
-    percent = passCount / 16 * 100 
-  } else {
-    header = 'Try Again!'
-  }
-  
+    
   fill('white')
   noStroke();
   textSize(80);
@@ -201,11 +264,13 @@ function draw() {
   textSize(65);
   textStyle(NORMAL);
   text(`You got ${Math.round(percent)}%`, width / 2, 450);
+ 
+  finish = true;
   }
 }
 
 function mouseDragged() {
-  if (mouseX >= 175 && mouseX <= 1105 && mouseY >= 175 && mouseY <= 150 + 470 - 25){
+  if (!finish && mouseX >= 175 && mouseX <= 1105 && mouseY >= 175 && mouseY <= 150 + 470 - 25){
     if (rayCasting([mouseX, mouseY], path.commands)){
       fill("green");
       score += 0.07;
