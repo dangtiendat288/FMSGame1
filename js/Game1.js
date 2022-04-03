@@ -233,7 +233,7 @@ function draw() {
   
   percent = passCount / 6 * 100
 
-  if (score >= 0 && passCount >= 4){
+  if (score >= 10 && passCount >= 4){
     header = 'Congratulation!'
     correctBell.play();
   } else if (score < 10 && passCount >= 1) {
