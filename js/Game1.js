@@ -7,14 +7,7 @@ let letter;
 let timer
 let finish
 let score
-let checkpoints = [
-    {x: 520,y: 545, passed: false},
-    {x: 575,y: 430, passed: false},
-    {x: 635,y: 230, passed: false},
-    {x: 665,y: 230, passed: false},
-    {x: 730,y: 430, passed: false},
-    {x: 790,y: 545, passed: false}
-  ];
+let checkpoints
 
 let canvasWidth = 1280;
 let canvasHeight = 720;
@@ -138,6 +131,14 @@ function resetSketch(){
   finish = false;
   score = 0
   timer = 5
+  checkpoints = [
+    {x: 520,y: 545, passed: false},
+    {x: 575,y: 430, passed: false},
+    {x: 635,y: 230, passed: false},
+    {x: 665,y: 230, passed: false},
+    {x: 730,y: 430, passed: false},
+    {x: 790,y: 545, passed: false}
+  ];
   background(bg);
 
   fill("#f5f5eb");
@@ -232,7 +233,7 @@ function draw() {
   
   percent = passCount / 6 * 100
 
-  if (score >= 20 && passCount >= 4){
+  if (score >= 0 && passCount >= 4){
     header = 'Congratulation!'
     correctBell.play();
   } else if (score < 10 && passCount >= 1) {
