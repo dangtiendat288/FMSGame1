@@ -11,7 +11,7 @@ let xFMS;
 let yFMS;
 
 function preload(){
-  img = loadImage('./images/HPbackground.jpg');
+  img = loadImage('../images/HPbackground.jpg');
 }
 
 function setup() {
