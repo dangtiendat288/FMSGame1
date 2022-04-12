@@ -5,12 +5,18 @@ let font;
 let fontSize;
 let letter;
 let timer
-let finish
-let score
+let isFinish
+let isStarted = false
+
+let score = 0
 let checkpoints
+let isTimerVisible = false;
 
 let canvasWidth = 1280;
 let canvasHeight = 720;
+
+const xFMS = canvasWidth / 2.3;
+const yFMS = canvasHeight / 5;
 
 let correctBell;
 let incorrectBell;
@@ -23,15 +29,8 @@ function preload(){
     if (err) {
       alert('Font could not be loaded: ' + err);
     } else {
-      font = f
       console.log('font ready')
-
-      fSize = 500
-      msg = 'A'
-      let x = canvasWidth / 2 - 150
-      let y = canvasHeight / 2 + 200
-      path = font.getPath(msg, x, y, fSize)    
-      console.log(path.commands)
+      font = f
     }
   })
 
@@ -128,18 +127,109 @@ function resetSketch(){
       resetSketch();
     }
 
-  finish = false;
-  score = 0
-  timer = 5
-  checkpoints = [
-    {x: 520,y: 545, passed: false},
-    {x: 575,y: 430, passed: false},
-    {x: 635,y: 230, passed: false},
-    {x: 665,y: 230, passed: false},
-    {x: 730,y: 430, passed: false},
-    {x: 790,y: 545, passed: false}
-  ];
+   //Create game1Btn  
+   btn_easy = new Clickable();
+   btn_easy.strokeWeight = 0;        //Stroke width of the clickable (float)
+   btn_easy.stroke = "#FFF";      //Border color of the clickable (hex number as a string)
+   btn_easy.textSize = 12;           //Size of the text (integer)
+   // game2Btn.textFont = "sans-serif"; //Font of the text (string)
+   btn_easy.cornerRadius = 20;
+   btn_easy.textScaled = true;
+   btn_easy.text = "Easy";
+   btn_easy.textColor = "white";
+   btn_easy.locate(xFMS, yFMS + 50);
+   btn_easy.resize(200, 100);
+   btn_easy.onOutside = function () {
+    this.color = "#acb0e0";
+  }
+  btn_easy.onHover = function () {
+    this.color = "#b7d4ff";
+  }
+   btn_easy.onPress = function () {
+     // Easy level set-up
+   }
+
+   //Create game2Btn  
+   btn_medium = new Clickable();
+   btn_medium.strokeWeight = 0;        //Stroke width of the clickable (float)
+   btn_medium.stroke = "#FFF";      //Border color of the clickable (hex number as a string)
+   btn_medium.textSize = 45;           //Size of the text (integer)
+   // game2Btn.textFont = "sans-serif"; //Font of the text (string)
+   btn_medium.cornerRadius = 20;
+  //  btn_medium.textScaled = true;
+   btn_medium.text = "Medium";
+   btn_medium.textColor = "white";
+   btn_medium.locate(xFMS, yFMS + 230);
+   btn_medium.resize(200, 100);
+   btn_medium.onOutside = function () {
+     this.color = "#acb0e0";
+   }
+   btn_medium.onHover = function () {
+     this.color = "#b7d4ff";
+   }
+   btn_medium.onPress = function () {
+     // Medium level set-up
+      isFinish = false;
+      score = 0
+      timer = 15
+      checkpoints = [
+        {x: 520,y: 545, passed: false},
+        {x: 575,y: 430, passed: false},
+        {x: 635,y: 230, passed: false},
+        {x: 665,y: 230, passed: false},
+        {x: 730,y: 430, passed: false},
+        {x: 790,y: 545, passed: false}
+      ];      
+
+        fSize = 500
+        msg = 'A'
+        let x = canvasWidth / 2 - 150
+        let y = canvasHeight / 2 + 200
+        path = font.getPath(msg, x, y, fSize)    
+        console.log(path.commands)      
+      
+      drawLetter(path)
+
+      drawingContext.setLineDash([10, 20]);
+      stroke("#AAAADE")
+      strokeWeight(10);
+      arrow(635, 230, 520, 545);
+      arrow(790, 545, 665, 230);
+      arrow(730, 430, 575, 430);
+
+      isTimerVisible = true
+      isStarted =  true
+      
+   }
+
+   //Create game3Btn  
+   btn_hard = new Clickable();
+   btn_hard.strokeWeight = 0;        //Stroke width of the clickable (float)
+   btn_hard.stroke = "#FFF";      //Border color of the clickable (hex number as a string)
+   btn_hard.textSize = 12;           //Size of the text (integer)
+   // game2Btn.textFont = "sans-serif"; //Font of the text (string)
+   btn_hard.cornerRadius = 20;
+   btn_hard.textScaled = true;
+   btn_hard.text = "Hard";
+   btn_hard.textColor = "white";
+   btn_hard.locate(xFMS, yFMS + 410);
+   btn_hard.resize(200, 100);
+   btn_hard.onOutside = function () {
+     this.color = "#acb0e0";
+   }
+   btn_hard.onHover = function () {
+     this.color = "#b7d4ff";
+   }
+   btn_hard.onPress = function () {
+    //  Hard level set-up
+   } 
+
+  
   background(bg);
+
+  fill("white");
+  noStroke();
+  rect(150, 150, 980, 540, 20);
 
   fill("#f5f5eb");
   textStyle(BOLD)
@@ -147,13 +237,15 @@ function resetSketch(){
   noStroke();
   textSize(80);
   text('Game 1', 150, 100);
+  
+}
 
+function drawLetter(path){
   fill("white");
   noStroke();
-  rect(150, 150, 980, 470, 20);
-
-  drawingContext.setLineDash([0]);
-  // stroke(100)
+  rect(150, 150, 980, 540, 20);
+  
+  drawingContext.setLineDash([0]);  
   fill("white");
   stroke("black")
   strokeWeight(10);
@@ -171,26 +263,31 @@ function resetSketch(){
         endShape(CLOSE)
     }
   }
+}
 
-  drawingContext.setLineDash([10, 20]);
-  stroke("#AAAADE")
-  strokeWeight(10);
-  arrow(635, 230, 520, 545);
-  arrow(790, 545, 665, 230);
-  arrow(730, 430, 575, 430);
+function displayTimer(){
+  
 }
 
 function draw() {
   btnBack.draw();
+  // console.log(isStarted)
+  if(!isFinish && !isStarted){
+    btn_easy.draw()
+    btn_medium.draw()
+    btn_hard.draw()
+  } 
+  
+  if(!isFinish){
+    if(isTimerVisible){
+      fill('#A8C4FE')
+      noStroke()
+      ellipse(1023, 255, 150);
 
-  if(!finish){
-    fill('#A8C4FE')
-    noStroke()
-    ellipse(1023, 255, 150);
-
-    fill('white')
-    textAlign(CENTER)
-    text(timer, 1024, 275)
+      fill('white')
+      textAlign(CENTER)
+      text(timer, 1024, 275)
+    }
   } else {
     btnNext.draw();
     btnReset.draw();
@@ -220,7 +317,7 @@ function draw() {
   }
 
   //score calculation
-  if(timer == 0 && finish == false){
+  if(timer == 0 && isFinish == false){
     
     passCount = 0;
     percent = 0;
@@ -266,12 +363,12 @@ function draw() {
   textStyle(NORMAL);
   text(`You got ${Math.round(percent)}%`, width / 2, 450);
  
-  finish = true;
+  isFinish = true;
   }
 }
 
 function mouseDragged() {
-  if (!finish && mouseX >= 175 && mouseX <= 1105 && mouseY >= 175 && mouseY <= 150 + 470 - 25){
+  if (!isFinish && mouseX >= 175 && mouseX <= 1105 && mouseY >= 175 && mouseY <= 150 + 470 - 25){
     if (rayCasting([mouseX, mouseY], path.commands)){
       fill("green");
       score += 0.07;
