@@ -21,6 +21,8 @@ const yFMS = canvasHeight / 5;
 let correctBell;
 let incorrectBell;
 
+let chosenLevels = -1;
+
 function preload(){
   // font = loadFont('/arial.ttf');
   bg = loadImage('../images/backgroundGame1.jpeg');
@@ -40,32 +42,7 @@ function preload(){
 
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
-   resetSketch()
-}
-
-  function arrow(x1, y1, x2, y2){  
-  dx = (x2 - x1);
-  dy = (y2 - y1);
-
-  norm = Math.sqrt(dx * dx + dy * dy)
-  udx = dx / norm
-  udy = dy / norm
-
-  ax = udx * Math.sqrt(3)/2 - udy * 1/2
-
-  ay = udx * 1/2 + udy * Math.sqrt(3)/2
-
-  bx = udx * Math.sqrt(3)/2 + udy * 1/2
-
-  by =  - udx * 1/2 + udy * Math.sqrt(3)/2
-
-  line(x1, y1, x2, y2);
-  line(x1, y1, x1 + 20 * ax, y1 + 20 * ay);
-  line(x1, y1, x1 + 20 * bx, y1 + 20 * by);
-}
-
-function resetSketch(){
-  btnBack = new Clickable();
+    btnBack = new Clickable();
     btnBack.strokeWeight = 0;        //Stroke width of the clickable (float)
     btnBack.stroke = "#000";      //Border color of the clickable (hex number as a string)
     btnBack.textSize = 12;           //Size of the text (integer)
@@ -124,7 +101,7 @@ function resetSketch(){
       this.color = "#b7d4ff";
     }
     btnReset.onPress = function () {
-      resetSketch();
+      resetSketch(chosenLevels);
     }
 
    //Create game1Btn  
@@ -147,6 +124,7 @@ function resetSketch(){
   }
    btn_easy.onPress = function () {
      // Easy level set-up
+     setUpEasyLevel();
    }
 
    //Create game2Btn  
@@ -168,38 +146,7 @@ function resetSketch(){
      this.color = "#b7d4ff";
    }
    btn_medium.onPress = function () {
-     // Medium level set-up
-      isFinish = false;
-      score = 0
-      timer = 15
-      checkpoints = [
-        {x: 520,y: 545, passed: false},
-        {x: 575,y: 430, passed: false},
-        {x: 635,y: 230, passed: false},
-        {x: 665,y: 230, passed: false},
-        {x: 730,y: 430, passed: false},
-        {x: 790,y: 545, passed: false}
-      ];      
-
-        fSize = 500
-        msg = 'A'
-        let x = canvasWidth / 2 - 150
-        let y = canvasHeight / 2 + 200
-        path = font.getPath(msg, x, y, fSize)    
-        console.log(path.commands)      
-      
-      drawLetter(path)
-
-      drawingContext.setLineDash([10, 20]);
-      stroke("#AAAADE")
-      strokeWeight(10);
-      arrow(635, 230, 520, 545);
-      arrow(790, 545, 665, 230);
-      arrow(730, 430, 575, 430);
-
-      isTimerVisible = true
-      isStarted =  true
-      
+     setUpMediumLevel() 
    }
 
    //Create game3Btn  
@@ -222,28 +169,55 @@ function resetSketch(){
    }
    btn_hard.onPress = function () {
     //  Hard level set-up
-   } 
+    setUpHardLevel()
+   }
+   resetSketch()
+}
 
-  
+  function arrow(x1, y1, x2, y2){  
+  dx = (x2 - x1);
+  dy = (y2 - y1);
+
+  norm = Math.sqrt(dx * dx + dy * dy)
+  udx = dx / norm
+  udy = dy / norm
+
+  ax = udx * Math.sqrt(3)/2 - udy * 1/2
+
+  ay = udx * 1/2 + udy * Math.sqrt(3)/2
+
+  bx = udx * Math.sqrt(3)/2 + udy * 1/2
+
+  by =  - udx * 1/2 + udy * Math.sqrt(3)/2
+
+  line(x1, y1, x2, y2);
+  line(x1, y1, x1 + 20 * ax, y1 + 20 * ay);
+  line(x1, y1, x1 + 20 * bx, y1 + 20 * by);
+}
+
+function resetSketch(chosenLevels){
   background(bg);
-
-  fill("white");
-  noStroke();
-  rect(150, 150, 980, 540, 20);
-
-  fill("#f5f5eb");
-  textStyle(BOLD)
-  textAlign(LEFT)
-  noStroke();
-  textSize(80);
-  text('Game 1', 150, 100);
-  
+  switch(chosenLevels){
+    case 0:
+      // easy level reset
+      setUpEasyLevel()
+      break;
+    case 1:
+      // medium level reset
+      setUpMediumLevel()
+      break;
+    case 2:
+      // hard level reset
+      setUpHardLevel()
+      break;
+  }
 }
 
 function drawLetter(path){
+  background(bg)
   fill("white");
   noStroke();
-  rect(150, 150, 980, 540, 20);
+  rect(150, 150, 980, 470, 20);
   
   drawingContext.setLineDash([0]);  
   fill("white");
@@ -271,8 +245,18 @@ function displayTimer(){
 
 function draw() {
   btnBack.draw();
+  fill("#f5f5eb");
+  textStyle(BOLD)
+  textAlign(LEFT)
+  noStroke();
+  textSize(80);
+  text('Game 1', 150, 100);
   // console.log(isStarted)
   if(!isFinish && !isStarted){
+    fill("white");
+    noStroke();
+    rect(150, 150, 980, 540, 20);
+    
     btn_easy.draw()
     btn_medium.draw()
     btn_hard.draw()
@@ -428,3 +412,110 @@ function mouseDragged() {
     //   noStroke();
     //   ellipse(150, 150, 50, 50, 20);
     // }
+
+    function setUpEasyLevel(){
+      // Medium level set-up
+      chosenLevels = 0
+      isFinish = false;
+      score = 0
+      timer = 20
+      checkpoints = [
+        {x: 520,y: 545, passed: false},
+        {x: 575,y: 430, passed: false},
+        {x: 635,y: 230, passed: false},
+        {x: 665,y: 230, passed: false},
+        {x: 730,y: 430, passed: false},
+        {x: 790,y: 545, passed: false}
+      ];      
+
+        fSize = 500
+        msg = 'C'
+        let x = canvasWidth / 2 - 150
+        let y = canvasHeight / 2 + 200
+        path = font.getPath(msg, x, y, fSize)    
+        console.log(path.commands)      
+      
+      drawLetter(path)
+
+      drawingContext.setLineDash([10, 20]);
+      stroke("#AAAADE")
+      strokeWeight(10);
+      arrow(635, 230, 520, 545);
+      arrow(790, 545, 665, 230);
+      arrow(730, 430, 575, 430);
+
+      isTimerVisible = true
+      isStarted =  true
+     
+    }
+
+    function setUpMediumLevel(){
+      // Medium level set-up
+      chosenLevels = 1
+      isFinish = false;
+      score = 0
+      timer = 15
+      checkpoints = [
+        {x: 520,y: 545, passed: false},
+        {x: 575,y: 430, passed: false},
+        {x: 635,y: 230, passed: false},
+        {x: 665,y: 230, passed: false},
+        {x: 730,y: 430, passed: false},
+        {x: 790,y: 545, passed: false}
+      ];      
+
+        fSize = 500
+        msg = 'A'
+        let x = canvasWidth / 2 - 150
+        let y = canvasHeight / 2 + 200
+        path = font.getPath(msg, x, y, fSize)    
+        console.log(path.commands)      
+      
+      drawLetter(path)
+
+      drawingContext.setLineDash([10, 20]);
+      stroke("#AAAADE")
+      strokeWeight(10);
+      arrow(635, 230, 520, 545);
+      arrow(790, 545, 665, 230);
+      arrow(730, 430, 575, 430);
+
+      isTimerVisible = true
+      isStarted =  true
+     
+    }
+    function setUpHardLevel(){
+      // Medium level set-up
+      chosenLevels = 1
+      isFinish = false;
+      score = 0
+      timer = 10
+      checkpoints = [
+        {x: 520,y: 545, passed: false},
+        {x: 575,y: 430, passed: false},
+        {x: 635,y: 230, passed: false},
+        {x: 665,y: 230, passed: false},
+        {x: 730,y: 430, passed: false},
+        {x: 790,y: 545, passed: false}
+      ];      
+
+        fSize = 500
+        msg = 'B'
+        let x = canvasWidth / 2 - 150
+        let y = canvasHeight / 2 + 200
+        path = font.getPath(msg, x, y, fSize)    
+        console.log(path.commands)      
+      
+      drawLetter(path)
+
+      drawingContext.setLineDash([10, 20]);
+      stroke("#AAAADE")
+      strokeWeight(10);
+      arrow(635, 230, 520, 545);
+      arrow(790, 545, 665, 230);
+      arrow(730, 430, 575, 430);
+
+      isTimerVisible = true
+      isStarted =  true
+     
+    }
