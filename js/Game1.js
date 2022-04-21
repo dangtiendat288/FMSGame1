@@ -60,8 +60,14 @@ function setup() {
       this.color = "#b7d4ff";
     }
     btnBack.onPress = function () {
-      window.location.replace('/index.html');
-    } 
+      if(!isStarted){
+        window.location.replace('/index.html');
+      } else if(isFinish || isStarted){
+        isFinish = false;
+        isStarted = false;
+        isTimerVisible = false
+      }
+    }   
 
     btnNext = new Clickable();
     btnNext.strokeWeight = 0;        //Stroke width of the clickable (float)
