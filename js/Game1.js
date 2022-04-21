@@ -312,19 +312,56 @@ function draw() {
   
   //end game notification
   
-  percent = passCount / 6 * 100
+  
 
-  if (score >= 10 && passCount >= 4){
-    header = 'Congratulation!'
-    correctBell.play();
-  } else if (score < 10 && passCount >= 1) {
-    header = 'Trace the paths please!'
-    percent = passCount / 16 * 100 
-    incorrectBell.play()
-  } else {
-    header = 'Try Again!'
-    incorrectBell.play()
+  switch(chosenLevels){
+    case 0:
+    percent = passCount / 3 * 100
+    
+    if (score >= 4 && passCount >= 1){
+      header = 'Congratulation!'
+      correctBell.play();
+    } else if (score < 4 && passCount >= 0) {
+      header = 'Trace the paths please!'
+      percent = passCount / 7 * 100 
+      incorrectBell.play()
+    } else {
+      header = 'Try Again!'
+      incorrectBell.play()
+    }
+    break;
+    case 1:    
+    percent = passCount / 5 * 100
+    
+    if (score >= 10 && passCount >= 3){
+      header = 'Congratulation!'
+      correctBell.play();
+    } else if (score < 10 && passCount >= 1) {
+      header = 'Trace the paths please!'
+      percent = passCount / 13 * 100 
+      incorrectBell.play()
+    } else {
+      header = 'Try Again!'
+      incorrectBell.play()
+    }
+    break;
+    case 2:
+      percent = passCount / 6 * 100
+    
+      if (score >= 10 && passCount >= 4){
+        header = 'Congratulation!'
+        correctBell.play();
+      } else if (score < 10 && passCount >= 1) {
+        header = 'Trace the paths please!'
+        percent = passCount / 16 * 100 
+        incorrectBell.play()
+      } else {
+        header = 'Try Again!'
+        incorrectBell.play()
+      }
+    break;
   }
+  
 
   fill("white");
   noStroke();
@@ -360,7 +397,7 @@ function mouseDragged() {
         if(checkpoints[i].x - 10 <= mouseX && mouseX <= checkpoints[i].x + 10
           && checkpoints[i].y - 10 <= mouseY && mouseY <= checkpoints[i].y + 10){
             checkpoints[i].passed = true;
-            console.log(checkpoints[i].x, checkpoints[i].passed)
+            console.log(checkpoints[i].x, checkpoints[i].y, checkpoints[i].passed)
           }
         }
       }
@@ -413,6 +450,12 @@ function mouseDragged() {
     //   ellipse(150, 150, 50, 50, 20);
     // }
 
+// function drawCurve(x1, y1, x2, y2, x3, y3, x4, y4){
+//     curve(x1, y1, x2, y2, x3, y3, x4, y4);
+//     // line(x1, y1, x1 + 20 * ax, y1 + 20 * ay);
+//     // line(x1, y1, x1 + 20 * bx, y1 + 20 * by);
+// }
+
     function setUpEasyLevel(){
       // Medium level set-up
       chosenLevels = 0
@@ -420,29 +463,23 @@ function mouseDragged() {
       score = 0
       timer = 20
       checkpoints = [
-        {x: 520,y: 545, passed: false},
-        {x: 575,y: 430, passed: false},
-        {x: 635,y: 230, passed: false},
-        {x: 665,y: 230, passed: false},
-        {x: 730,y: 430, passed: false},
-        {x: 790,y: 545, passed: false}
+        {x: 620,y: 215, passed: false},
+        {x: 620,y: 380, passed: false},
+        {x: 620,y: 545, passed: false},
       ];      
 
         fSize = 500
-        msg = 'C'
-        let x = canvasWidth / 2 - 150
+        msg = 'I'
+        let x = canvasWidth / 2 - 90
         let y = canvasHeight / 2 + 200
         path = font.getPath(msg, x, y, fSize)    
         console.log(path.commands)      
       
       drawLetter(path)
-
       drawingContext.setLineDash([10, 20]);
       stroke("#AAAADE")
       strokeWeight(10);
-      arrow(635, 230, 520, 545);
-      arrow(790, 545, 665, 230);
-      arrow(730, 430, 575, 430);
+      arrow(620, 545, 620, 215);  
 
       isTimerVisible = true
       isStarted =  true
@@ -455,6 +492,39 @@ function mouseDragged() {
       isFinish = false;
       score = 0
       timer = 15
+      checkpoints = [
+        {x: 520,y: 230, passed: false},
+        {x: 643,y: 230, passed: false},
+        {x: 770,y: 230, passed: false},
+        {x: 643,y: 387, passed: false},
+        {x: 643,y: 545, passed: false}
+      ];      
+
+        fSize = 500
+        msg = 'T'
+        let x = canvasWidth / 2 - 150
+        let y = canvasHeight / 2 + 210
+        path = font.getPath(msg, x, y, fSize)    
+        console.log(path.commands)      
+      
+      drawLetter(path)
+
+      drawingContext.setLineDash([10, 20]);
+      stroke("#AAAADE")
+      strokeWeight(10);
+      arrow(770, 230, 500, 230);
+      arrow(643, 545, 643, 215);
+
+      isTimerVisible = true
+      isStarted =  true
+     
+    }
+    function setUpHardLevel(){
+      // Hard level set-up
+      chosenLevels = 2
+      isFinish = false;
+      score = 0
+      timer = 10
       checkpoints = [
         {x: 520,y: 545, passed: false},
         {x: 575,y: 430, passed: false},
@@ -481,41 +551,5 @@ function mouseDragged() {
       arrow(730, 430, 575, 430);
 
       isTimerVisible = true
-      isStarted =  true
-     
-    }
-    function setUpHardLevel(){
-      // Medium level set-up
-      chosenLevels = 1
-      isFinish = false;
-      score = 0
-      timer = 10
-      checkpoints = [
-        {x: 520,y: 545, passed: false},
-        {x: 575,y: 430, passed: false},
-        {x: 635,y: 230, passed: false},
-        {x: 665,y: 230, passed: false},
-        {x: 730,y: 430, passed: false},
-        {x: 790,y: 545, passed: false}
-      ];      
-
-        fSize = 500
-        msg = 'B'
-        let x = canvasWidth / 2 - 150
-        let y = canvasHeight / 2 + 200
-        path = font.getPath(msg, x, y, fSize)    
-        console.log(path.commands)      
-      
-      drawLetter(path)
-
-      drawingContext.setLineDash([10, 20]);
-      stroke("#AAAADE")
-      strokeWeight(10);
-      arrow(635, 230, 520, 545);
-      arrow(790, 545, 665, 230);
-      arrow(730, 430, 575, 430);
-
-      isTimerVisible = true
-      isStarted =  true
-     
+      isStarted =  true     
     }
