@@ -85,7 +85,14 @@ function setup() {
       this.color = "#b7d4ff";
     }
     btnNext.onPress = function () {
-      window.location.replace('/index.html');
+      switch (chosenLevels){
+        case 0:
+          setUpMediumLevel()
+          break;
+        case 1:
+          setUpHardLevel()
+          break;          
+      }
     }   
 
     btnReset = new Clickable();
@@ -279,7 +286,9 @@ function draw() {
       text(timer, 1024, 275)
     }
   } else {
-    btnNext.draw();
+    if(chosenLevels != 2){
+      btnNext.draw();
+    }
     btnReset.draw();
 
   }
