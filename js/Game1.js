@@ -127,7 +127,7 @@ function setup() {
    btn_easy.textScaled = true;
    btn_easy.text = "Easy";
    btn_easy.textColor = "white";
-   btn_easy.locate(xFMS, yFMS + 50);
+   btn_easy.locate(xFMS + 230, yFMS + 50);
    btn_easy.resize(200, 100);
    btn_easy.onOutside = function () {
     this.color = "#acb0e0";
@@ -150,7 +150,7 @@ function setup() {
   //  btn_medium.textScaled = true;
    btn_medium.text = "Medium";
    btn_medium.textColor = "white";
-   btn_medium.locate(xFMS, yFMS + 230);
+   btn_medium.locate(xFMS + 230, yFMS + 230);
    btn_medium.resize(200, 100);
    btn_medium.onOutside = function () {
      this.color = "#acb0e0";
@@ -172,7 +172,7 @@ function setup() {
    btn_hard.textScaled = true;
    btn_hard.text = "Hard";
    btn_hard.textColor = "white";
-   btn_hard.locate(xFMS, yFMS + 410);
+   btn_hard.locate(xFMS + 230, yFMS + 410);
    btn_hard.resize(200, 100);
    btn_hard.onOutside = function () {
      this.color = "#acb0e0";
@@ -270,6 +270,16 @@ function draw() {
     noStroke();
     rect(150, 150, 980, 540, 20);
     
+    fill("#ADB1E1");
+    noStroke();
+    rect(width * 0.160, 200, 420, 440, 20);
+
+    fill("#F5F5EB");
+    textStyle(BOLD);
+    textAlign(CENTER)
+    noStroke();
+    textSize(60);
+    text('Select a level then start tracing the letter :D', width * 0.2, 245, 335);
     btn_easy.draw()
     btn_medium.draw()
     btn_hard.draw()
@@ -326,9 +336,7 @@ function draw() {
     })
   
   //end game notification
-  
-  
-
+  if(isStarted){
   switch(chosenLevels){
     case 0:
     percent = passCount / 3 * 100
@@ -375,9 +383,8 @@ function draw() {
         incorrectBell.play()
       }
     break;
-  }
+  }  
   
-
   fill("white");
   noStroke();
   rect(150, 150, width - 300, height - 200, 20);
@@ -400,6 +407,7 @@ function draw() {
   text(`You got ${Math.round(percent)}%`, width / 2, 450);
  
   isFinish = true;
+  }
   }
 }
 
