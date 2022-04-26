@@ -97,10 +97,10 @@ function preload() {
 function draw() {
   background(bg2);
   noStroke();
-  fill("Salmon");
-  textSize(16);
-  textAlign(CENTER);
-  text("(" + floor(mouseX) + ", " + floor(mouseY) + ")", mouseX, mouseY);
+//   fill("Salmon");
+//   textSize(16);
+//   textAlign(CENTER);
+//   text("(" + floor(mouseX) + ", " + floor(mouseY) + ")", mouseX, mouseY);
   
   fill('#F6EAC2');
     beginShape();
