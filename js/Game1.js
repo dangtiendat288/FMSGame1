@@ -1,20 +1,22 @@
+//Declaration of game1's global variables
 let bg;
 let resetImage;
 let points;
 let font;
 let fontSize;
 let letter;
-let timer
-let isFinish
-let isStarted = false
+let timer;
+let isFinish;
+let isStarted = false;
 
-let score = 0
-let checkpoints
+let score = 0;
+let checkpoints;
 let isTimerVisible = false;
 
 let canvasWidth = 1280;
 let canvasHeight = 720;
 
+//anchor points 
 const xFMS = canvasWidth / 2.3;
 const yFMS = canvasHeight / 5;
 
@@ -187,7 +189,7 @@ function setup() {
    resetSketch()
 }
 
-  function arrow(x1, y1, x2, y2){  
+function arrow(x1, y1, x2, y2){  
   dx = (x2 - x1);
   dy = (y2 - y1);
 
@@ -250,10 +252,6 @@ function drawLetter(path){
         endShape(CLOSE)
     }
   }
-}
-
-function displayTimer(){
-  
 }
 
 function draw() {
@@ -431,11 +429,9 @@ function mouseDragged() {
       noStroke();
       ellipse(mouseX, mouseY, 40);
     }
-    
-    // console.log(rayCasting([mouseX, mouseY], path.commands))
-  }
+}
   
-  function rayCasting(point, letter){
+function rayCasting(point, letter){
     let n = letter.length;
     let count = 0;
     let x = point[0];
@@ -464,22 +460,9 @@ function mouseDragged() {
         }
       }
       return count % 2 != 0;
-    }
+}
 
-    // function mousePressed() {  
-    //   console.log(mouseX);
-    //   fill("green");
-    //   noStroke();
-    //   ellipse(150, 150, 50, 50, 20);
-    // }
-
-// function drawCurve(x1, y1, x2, y2, x3, y3, x4, y4){
-//     curve(x1, y1, x2, y2, x3, y3, x4, y4);
-//     // line(x1, y1, x1 + 20 * ax, y1 + 20 * ay);
-//     // line(x1, y1, x1 + 20 * bx, y1 + 20 * by);
-// }
-
-    function setUpEasyLevel(){
+function setUpEasyLevel(){
       // Medium level set-up
       chosenLevels = 0
       isFinish = false;
@@ -507,9 +490,9 @@ function mouseDragged() {
       isTimerVisible = true
       isStarted =  true
      
-    }
+}
 
-    function setUpMediumLevel(){
+function setUpMediumLevel(){
       // Medium level set-up
       chosenLevels = 1
       isFinish = false;
@@ -541,8 +524,9 @@ function mouseDragged() {
       isTimerVisible = true
       isStarted =  true
      
-    }
-    function setUpHardLevel(){
+}
+
+function setUpHardLevel(){
       // Hard level set-up
       chosenLevels = 2
       isFinish = false;
@@ -575,4 +559,4 @@ function mouseDragged() {
 
       isTimerVisible = true
       isStarted =  true     
-    }
+}
