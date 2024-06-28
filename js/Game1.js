@@ -27,9 +27,9 @@ let chosenLevels = -1;
 
 function preload(){
   // font = loadFont('/arial.ttf');
-  bg = loadImage('../images/backgroundGame1.jpg');
-  resetImage = loadImage('../images/reset.png');
-  opentype.load('/arial.ttf', (err, f) => {
+  bg = loadImage('images/backgroundGame1.jpg');
+  resetImage = loadImage('images/reset.png');
+  opentype.load('arial.ttf', (err, f) => {
     if (err) {
       alert('Font could not be loaded: ' + err);
     } else {
