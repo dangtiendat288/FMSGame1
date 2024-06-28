@@ -18,7 +18,7 @@ let shape2sound = false; allcorsound = false;
 
 function setup() {
   bg = loadImage('/FMSGame1/images/backgroundGame3-1.png');
-  bg2 = loadImage('/FMSGame1/images/backgroundGame3-2.PNG');
+  bg2 = loadImage('/FMSGame1/images/backgroundGame3-2.jpg');
   createCanvas(1280, 720);  
   setInterval(timeIt, 1000);
   resetbutton = new Clickable();
