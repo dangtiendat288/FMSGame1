@@ -62,7 +62,7 @@ function setup() {
       this.color = "#c09e82";
     }
     game2Btn.onPress = function () {
-      window.location.replace('/game2.html');
+      window.location.replace('game2.html');
     }
 
     //Create game3Btn  
@@ -84,7 +84,7 @@ function setup() {
       this.color = "#c09e82";
     }
     game3Btn.onPress = function () {
-      window.location.replace('/game3.html');
+      window.location.replace('game3.html');
     }
 }
 
