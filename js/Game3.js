@@ -81,7 +81,7 @@ function setup() {
     btnNext.onPress = function () {
       level = 2;
       //nextlevel();
-      window.location.replace('/game3-2.html');
+      window.location.replace('game3-2.html');
     } 
 }
 
