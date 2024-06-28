@@ -40,7 +40,7 @@ function setup() {
       this.color = "#c09e82";
     }
     game1Btn.onPress = function () {
-      window.location.replace('/game1.html');
+      window.location.replace('game1.html');
     }
 
     //Create game2Btn  
