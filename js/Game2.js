@@ -50,14 +50,14 @@ let directions;
 
 //What loads before the game even appears
 function preload() {
-  strikeSound = loadSound("../sounds/Family feud-buzzer.mp3");
-  winSound = loadSound("../sounds/ding.mp3");
-  gameover = loadSound("../sounds/Gameover.mp3");
+  strikeSound = loadSound("/FMSGame1/sounds/Family feud-buzzer.mp3");
+  winSound = loadSound("/FMSGame1/sounds/ding.mp3");
+  gameover = loadSound("/FMSGame1/sounds/Gameover.mp3");
 }
 
 //what happens when reset button is pressed
 function reset() {
-  bg = loadImage("../images/bgGame2.png");
+  bg = loadImage("/FMSGame1/images/bgGame2.png");
   //set all variables and counts back to their initial values upon reset.
   strikes = 0;
   block7 = false;
