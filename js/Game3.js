@@ -86,10 +86,10 @@ function setup() {
 }
 
 function preload() {
-  resetImage = loadImage('../images/reset.png');
+  resetImage = loadImage('/FMSGame1/images/reset.png');
   soundFormats('mp3', 'ogg');
-  sound1 = loadSound('../sounds/correct1.mp3');
-  soundAll = loadSound ('../sounds/correctAll.mp3');
+  sound1 = loadSound('/FMSGame1/sounds/correct1.mp3');
+  soundAll = loadSound ('/FMSGame1/sounds/correctAll.mp3');
 }
 
 function draw() {
