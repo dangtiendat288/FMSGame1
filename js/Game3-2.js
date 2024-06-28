@@ -19,7 +19,7 @@ let shape2sound = false; allcorsound = false;
 var gif_loadImg, gif_createImg;
 
 function setup() {
-  bg2 = loadImage('../images/backgroundGame3-2.jpg');
+  bg2 = loadImage('/FMSGame1/images/backgroundGame3-2.jpg');
   createCanvas(1280, 720);  
   setInterval(timeIt, 1000);
   resetbutton = new Clickable();
