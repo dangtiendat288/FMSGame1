@@ -63,11 +63,12 @@ function setup() {
     }
     btnBack.onPress = function () {
       if(!isStarted){
-        window.location.replace('/index.html');
+        // window.location.replace('/index.html');
+        window.history.back();
       } else if(isFinish || isStarted){
         isFinish = false;
         isStarted = false;
-        isTimerVisible = false
+        isTimerVisible = false;
       }
     }   
 
