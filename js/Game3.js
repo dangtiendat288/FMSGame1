@@ -59,7 +59,7 @@ function setup() {
       this.color = "#BDD2B6";
     }
     btnBack.onPress = function () {
-      window.location.replace('/index.html');
+      window.location.href = 'https://dangtiendat288.github.io/FMSGame1/';        
     } 
   
     btnNext = new Clickable();

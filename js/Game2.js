@@ -174,7 +174,7 @@ function setup() {
     this.color = "#67e2c5";
   };
   btnBack.onPress = function () {
-    window.location.replace("/index.html");
+    window.location.href = 'https://dangtiendat288.github.io/FMSGame1/';
   };
   
   //button to set game to easy mode
