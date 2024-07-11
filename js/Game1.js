@@ -63,7 +63,7 @@ function setup() {
     }
     btnBack.onPress = function () {
       if(!isStarted){
-        window.location.href('https://dangtiendat288.github.io/FMSGame1/');        
+        window.location.href = 'https://dangtiendat288.github.io/FMSGame1/';        
       } else if(isFinish || isStarted){
         isFinish = false;
         isStarted = false;
