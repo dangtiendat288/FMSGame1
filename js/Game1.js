@@ -63,8 +63,7 @@ function setup() {
     }
     btnBack.onPress = function () {
       if(!isStarted){
-        // window.location.replace('/index.html');
-        window.history.back();
+        window.location.replace('');        
       } else if(isFinish || isStarted){
         isFinish = false;
         isStarted = false;
